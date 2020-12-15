@@ -8,9 +8,9 @@ export default function Header() {
         <button className="ui blue button">Book List</button>
       </Link>
       <div className="right menu">
-        <Link to="/" className="item">
+        {/* <Link to="/" className="item">
           <button className="ui blue button">Book Shelf</button>
-        </Link>
+        </Link> */}
         <Link to="/book/signup" className="item">
           <button className="ui blue button">Sign Up</button>
         </Link>

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { userLogin } from "../../actions/index";
+import { connect } from "react-redux";
 
 class LogIn extends Component {
   renderError = ({ error, touched }) => {
@@ -24,7 +26,7 @@ class LogIn extends Component {
     );
   };
   onSubmit = (formValue) => {
-    console.log(formValue);
+    this.props.userLogin(formValue);
   };
 
   render() {
@@ -57,7 +59,9 @@ const validate = (values) => {
   return errors;
 };
 
-export default reduxForm({
+const formWrapper = reduxForm({
   form: "LogIn",
   validate,
 })(LogIn);
+
+export default connect(null, { userLogin })(formWrapper);

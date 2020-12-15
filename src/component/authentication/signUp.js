@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
+import { createUser } from "../../actions/index";
+import { connect } from "react-redux";
 
 class signUp extends Component {
   renderError = ({ error, touched }) => {
@@ -24,14 +26,15 @@ class signUp extends Component {
     );
   };
   onSubmit = (formValue) => {
-    console.log(formValue);
+    
+    this.props.createUser(formValue);
   };
 
   render() {
     return (
       <div className="ui segment">
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-          <Field name="username" type="text" component={this.renderField} label="Username" />
+          <Field name="name" type="text" component={this.renderField} label="Username" />
           <Field name="email" type="email" component={this.renderField} label="Email" />
           <Field name="password" type="password" component={this.renderField} label="Password" />
           <Field name="passwordConfirm" type="password" component={this.renderField} label="Confirm Password" />
@@ -46,8 +49,8 @@ class signUp extends Component {
 
 const validate = (values) => {
   const errors = {};
-  if (!values.username) {
-    errors.username = "Required";
+  if (!values.name) {
+    errors.name = "Required";
   }
 
   if (!values.email) {
@@ -68,7 +71,9 @@ const validate = (values) => {
   return errors;
 };
 
-export default reduxForm({
+const formWrapped = reduxForm({
   form: "signUp",
   validate,
 })(signUp);
+
+export default connect(null, { createUser })(formWrapped);
