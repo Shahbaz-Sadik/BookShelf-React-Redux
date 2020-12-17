@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { Field, reduxForm } from "redux-form";
-import { createBook } from "../../actions/index";
+import { fetchBook } from "../../actions";
 import { connect } from "react-redux";
 
-class BookCreate extends Component {
+class BooksForm extends Component {
+
+
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -26,9 +28,9 @@ class BookCreate extends Component {
     );
   };
   onSubmit = (formValue) => {
-    const token = this.props.token;
-    this.props.createBook(formValue, token);
+    this.props.onSubmit(formValue);
   };
+
 
   render() {
     return (
@@ -41,7 +43,7 @@ class BookCreate extends Component {
           <Field name="language" type="text" component={this.renderField} label="Language" />
           <Field name="price" type="number" component={this.renderField} label="Price" />
           <div>
-            <button className="ui button green">Add Book</button>
+            <button className="ui button green">Edit Book</button>
           </div>
         </form>
       </div>
@@ -73,13 +75,9 @@ const validate = (values) => {
   return errors;
 };
 
-const formWrapped = reduxForm({
+const formWrapper = reduxForm({
   form: "createBook",
   validate,
-})(BookCreate);
+})(BooksForm);
 
-const mapStateToProps =(state)=>{
-  return({token: state.user.token})
-}
-
-export default connect(mapStateToProps, { createBook })(formWrapped);
+export default connect(null, { fetchBook })(formWrapper);
