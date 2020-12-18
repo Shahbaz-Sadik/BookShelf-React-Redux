@@ -36,7 +36,7 @@ class BooksForm extends Component {
     return (
       <div className="ui segment">
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
-          <Field name="bookName" type="text" component={this.renderField} label="Book Name" />
+          {/* <Field name="bookName" type="text" component={this.renderField} label="Book Name" /> */}
           <Field name="authorName" type="text" component={this.renderField} label="Author Name" />
           <Field name="publishYear" type="text" component={this.renderField} label="Publish Year" />
           <Field name="edition" type="text" component={this.renderField} label="Edition" />
@@ -78,6 +78,7 @@ const validate = (values) => {
 const formWrapper = reduxForm({
   form: "createBook",
   validate,
+  enableReinitialize: true
 })(BooksForm);
 
 export default connect(null, { fetchBook })(formWrapper);

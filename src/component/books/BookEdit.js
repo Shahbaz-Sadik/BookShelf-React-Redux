@@ -10,21 +10,21 @@ class BookEdit extends Component {
   }
   onSubmit = (formValue) => {
     const token = this.props.token;
-    console.log(formValue.bookName);
+    console.log(formValue);
     this.props.editBook(formValue.bookName, formValue, token);
   };
 
-  // componentDidUpdate = () => {
-  //   setTimeout(this.render(), 5000);
-  // };
-
   render() {
-    if(!this.props.Details){
-      return(<div>Loading....</div>)
+    const Value = this.props.Details;
+    console.log(Value);
+
+    if (!this.props.Details) {
+      return <div>Loading....</div>;
     }
     return (
-      <div>
-        <BookForm initialValues={this.props.Details} onSubmit={this.onSubmit} />
+      <div className="ui segment">
+        <h4 style={{ textAlign: "center" }}>{this.props.Details.bookName}</h4>
+        <BookForm initialValues={Value} onSubmit={this.onSubmit} />
       </div>
     );
   }
@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     book: ownProps.match.params.id,
     token: state.user.token,
-    Details: state.bookDetails.Details,
+    Details: state.bookDetails.Details,  
   };
 };
 export default connect(mapStateToProps, { editBook, fetchBook })(BookEdit);
