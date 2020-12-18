@@ -1,11 +1,16 @@
-import { LOG_IN, LOG_OUT } from "./../actions/type";
+import { LOG_IN, LOG_OUT, LOG_IN_FAILED } from "./../actions/type";
+const initialState = {
+  loginFailed: false,
+};
 
-const reducer = (state = {}, action) => {
+const reducer = (state = initialState,  action) => {
   switch (action.type) {
     case LOG_IN:
       return { ...state, token: action.payload.token };
     case LOG_OUT:
       return { ...state, token: action.payload };
+    case LOG_IN_FAILED:
+      return { ...state, loginFailed: true, error: action.payload };
     default:
       return state;
   }

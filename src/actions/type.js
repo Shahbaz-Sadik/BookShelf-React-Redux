@@ -7,3 +7,4 @@ export const EDIT_BOOK = "EDIT_BOOK";
 export const DELETE_BOOK = "DELETE_BOOK";
 export const LOG_OUT = "LOG_OUT";
 export const ERROR = "ERROR";
+export const LOG_IN_FAILED = "LOG_IN_FAILED ";

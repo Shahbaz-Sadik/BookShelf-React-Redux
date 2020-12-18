@@ -33,6 +33,7 @@ class BookCreate extends Component {
   render() {
     return (
       <div className="ui segment">
+        <h3 style={{ textAlign: "center" }}>Add Book</h3>
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
           <Field name="bookName" type="text" component={this.renderField} label="Book Name" />
           <Field name="authorName" type="text" component={this.renderField} label="Author Name" />

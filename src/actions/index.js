@@ -1,5 +1,15 @@
 import bookshelf from "../apis/bookshelf";
-import { SIGN_UP, LOG_IN, CREATE_BOOK, DELETE_BOOK, EDIT_BOOK, FETCH_BOOK, FETCH_BOOKS, LOG_OUT, ERROR } from "./type";
+import {
+  SIGN_UP,
+  LOG_IN,
+  CREATE_BOOK,
+  DELETE_BOOK,
+  EDIT_BOOK,
+  FETCH_BOOK,
+  FETCH_BOOKS,
+  LOG_OUT,
+  LOG_IN_FAILED,
+} from "./type";
 import history from "./../history";
 
 export const createUser = (formValue) => async (dispatch) => {
@@ -15,15 +25,16 @@ export const createUser = (formValue) => async (dispatch) => {
 export const userLogin = (formValue) => async (dispatch) => {
   try {
     const response = await bookshelf.post("api/v1/users/login", formValue);
-    window.localStorage.setItem("token", JSON.stringify(response.data.token));
-    //const token = JSON.parse(window.localStorage.getItem("token"));
 
-    console.log(response.data);
+    window.localStorage.setItem("token", JSON.stringify(response.data.token));
 
     dispatch({ type: LOG_IN, payload: response.data });
+
     history.push("/");
   } catch (err) {
-    console.log(err);
+    //console.log(err.response.data);
+    dispatch({ type: LOG_IN_FAILED, payload: err.response.data });
+    history.push("/book/login");
   }
 };
 
@@ -43,6 +54,7 @@ export const fetchBooks = () => async (dispatch) => {
 };
 
 export const createBook = (formValue, token) => async (dispatch) => {
+  token = token || JSON.parse(window.localStorage.getItem("token"));
   const response = await bookshelf.post("api/v1/books", formValue, {
     headers: {
       authorization: `Bearer ${token}`,
@@ -62,6 +74,8 @@ export const fetchBook = (id) => async (dispatch) => {
 };
 
 export const editBook = (id, formValue, token) => async (dispatch) => {
+  token = token || JSON.parse(window.localStorage.getItem("token"));
+
   const response = await bookshelf.patch(`api/v1/books/${id}`, formValue, {
     headers: {
       authorization: `Bearer ${token}`,
@@ -73,6 +87,7 @@ export const editBook = (id, formValue, token) => async (dispatch) => {
 };
 
 export const deleteBook = (id, token) => async (dispatch) => {
+  token = token || JSON.parse(window.localStorage.getItem("token"));
   await bookshelf.delete(`api/v1/books/${id}`, {
     headers: {
       authorization: `Bearer ${token}`,

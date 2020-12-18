@@ -4,7 +4,11 @@ import { connect } from "react-redux";
 
 class Header extends React.Component {
   renderLogin = () => {
-    if (this.props.token) {
+    let token;
+    if (window.localStorage.getItem("token")) {
+      token = JSON.parse(window.localStorage.getItem("token"));
+    }
+    if (this.props.token || token) {
       return (
         <div className="right menu">
           <Link to="/book/new" className="item">

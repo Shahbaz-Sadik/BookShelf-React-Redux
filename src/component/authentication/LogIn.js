@@ -4,6 +4,9 @@ import { userLogin } from "../../actions/index";
 import { connect } from "react-redux";
 
 class LogIn extends Component {
+  componentDidMount() {
+   // console.log(this.props.loginFailed);
+  }
   renderError = ({ error, touched }) => {
     if (touched && error) {
       return (
@@ -30,6 +33,9 @@ class LogIn extends Component {
   };
 
   render() {
+    console.log(this.props.loginFailed);
+    console.log(this.props.errorMessage);
+
     return (
       <div className="ui segment">
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
@@ -64,4 +70,11 @@ const formWrapper = reduxForm({
   validate,
 })(LogIn);
 
-export default connect(null, { userLogin })(formWrapper);
+const mapStateToProps = (state) => {
+  return {
+    loginFailed: state.user.loginFailed,
+    errorMessage: state.user,
+  };
+};
+
+export default connect(mapStateToProps, { userLogin })(formWrapper);

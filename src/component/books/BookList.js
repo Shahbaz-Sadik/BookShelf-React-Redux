@@ -9,13 +9,19 @@ class BookList extends Component {
   }
 
   authUser(book) {
-    if (this.props.token && book.bookName) {
+    let token;
+    if (window.localStorage.getItem("token")) {
+      token = JSON.parse(window.localStorage.getItem("token"));
+    }
+    if ((this.props.token || token) && book.bookName) {
       return (
         <div className="right floated content" key={book._id}>
           <Link to={`/book/edit/${book.bookName}`} className="ui button primary">
             Edit
           </Link>
-          <Link to={`/book/delete/${book.bookName}`} className="ui button negative">Delete</Link>
+          <Link to={`/book/delete/${book.bookName}`} className="ui button negative">
+            Delete
+          </Link>
         </div>
       );
     }
@@ -30,7 +36,9 @@ class BookList extends Component {
           <div className="item" style={{ marginTop: " 20px" }} key={book._id}>
             {this.authUser(book)}
             <div className="right floated content">
-              <Link  to={`/book/details/${book.bookName}`} className="ui button primary">Details</Link>
+              <Link to={`/book/details/${book.bookName}`} className="ui button primary">
+                Details
+              </Link>
             </div>
             <i className="large middle aligned icon book" />
             <div className="content">

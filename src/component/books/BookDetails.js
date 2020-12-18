@@ -12,6 +12,7 @@ class BookDetails extends Component {
     }
     return (
       <div className="ui segment">
+        <h3 style={{ textAlign: "center" }}>Book Details</h3>
         <div className="ui celled list">
           <div className="item" style={{ marginTop: " 20px" }}>
             <div className="content">

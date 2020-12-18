@@ -23,6 +23,7 @@ class BookEdit extends Component {
     }
     return (
       <div className="ui segment">
+        <h3 style={{ textAlign: "center" }}>Edit Book</h3>
         <h4 style={{ textAlign: "center" }}>{this.props.Details.bookName}</h4>
         <BookForm initialValues={Value} onSubmit={this.onSubmit} />
       </div>
