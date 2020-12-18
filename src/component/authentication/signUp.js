@@ -26,13 +26,22 @@ class signUp extends Component {
     );
   };
   onSubmit = (formValue) => {
-    
     this.props.createUser(formValue);
   };
 
+  isSignUpFailed = () => {
+    if (this.props.signUpFailed) {
+      return (
+        <div className="ui error message">
+          <div className="header">{this.props.errorMessage}</div>
+        </div>
+      );
+    }
+  };
   render() {
     return (
-      <div className="ui segment">
+      <div className="ui segment error">
+        {this.isSignUpFailed()}
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
           <Field name="name" type="text" component={this.renderField} label="Username" />
           <Field name="email" type="email" component={this.renderField} label="Email" />
@@ -76,4 +85,11 @@ const formWrapped = reduxForm({
   validate,
 })(signUp);
 
-export default connect(null, { createUser })(formWrapped);
+const mapStateToProps = (state) => {
+  return {
+    signUpFailed: state.user.signUpFailed,
+    errorMessage: state.user.error.message,
+  };
+};
+
+export default connect(mapStateToProps, { createUser })(formWrapped);

@@ -29,11 +29,21 @@ class BookCreate extends Component {
     const token = this.props.token;
     this.props.createBook(formValue, token);
   };
+  isCreateBookFailed = () => {
+    if (this.props.errorMessage) {
+      return (
+        <div className="ui error message">
+          <div className="header">{this.props.errorMessage}</div>
+        </div>
+      );
+    }
+  };
 
   render() {
     return (
       <div className="ui segment">
         <h3 style={{ textAlign: "center" }}>Add Book</h3>
+        {this.isCreateBookFailed()}
         <form onSubmit={this.props.handleSubmit(this.onSubmit)} className="ui form error">
           <Field name="bookName" type="text" component={this.renderField} label="Book Name" />
           <Field name="authorName" type="text" component={this.renderField} label="Author Name" />
@@ -79,8 +89,8 @@ const formWrapped = reduxForm({
   validate,
 })(BookCreate);
 
-const mapStateToProps =(state)=>{
-  return({token: state.user.token})
-}
+const mapStateToProps = (state) => {
+  return { token: state.user.token, errorMessage: state.error.errorMessage.message };
+};
 
 export default connect(mapStateToProps, { createBook })(formWrapped);

@@ -5,24 +5,30 @@ import BookForm from "../books/BooksForm";
 
 class BookEdit extends Component {
   componentDidMount() {
-    console.log(this.props.book);
     this.props.fetchBook(this.props.book);
   }
   onSubmit = (formValue) => {
     const token = this.props.token;
-    console.log(formValue);
     this.props.editBook(formValue.bookName, formValue, token);
   };
-
+  editBookError = () => {
+    if (this.props.errorMessage) {
+      return (
+        <div className="ui error message">
+          <div className="header">{this.props.errorMessage}</div>
+        </div>
+      );
+    }
+  };
   render() {
     const Value = this.props.Details;
-    console.log(Value);
 
     if (!this.props.Details) {
       return <div>Loading....</div>;
     }
     return (
-      <div className="ui segment">
+      <div className="ui segment error">
+        {this.editBookError()}
         <h3 style={{ textAlign: "center" }}>Edit Book</h3>
         <h4 style={{ textAlign: "center" }}>{this.props.Details.bookName}</h4>
         <BookForm initialValues={Value} onSubmit={this.onSubmit} />
@@ -35,7 +41,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     book: ownProps.match.params.id,
     token: state.user.token,
-    Details: state.bookDetails.Details,  
+    Details: state.bookDetails.Details,
+    errorMessage: state.user.error.message,
   };
 };
 export default connect(mapStateToProps, { editBook, fetchBook })(BookEdit);

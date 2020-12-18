@@ -1,9 +1,17 @@
-import { ERROR } from "../actions/type";
+import { CREATE_BOOK_ERROR, EDIT_BOOK_ERROR } from "../actions/type";
 
-const reducer = (state = {}, action) => {
+const initialState = {
+  errorMessage: {
+    message: "",
+  },
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ERROR:
-      return { ...state, errMessage: action.payload.message };
+    case CREATE_BOOK_ERROR:
+      return { ...state, errorMessage: action.payload };
+    case EDIT_BOOK_ERROR:
+      return { ...state, errorMessage: action.payload };
     default:
       return state;
   }

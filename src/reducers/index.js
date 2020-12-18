@@ -10,5 +10,5 @@ export default combineReducers({
   books: bookReducer,
   user: userReducer,
   bookDetails: bookDetailsReducer,
-  errorMessage: errorReducer,
+  error: errorReducer,
 });
